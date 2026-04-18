@@ -1,0 +1,339 @@
+{
+  "ambiguity_map": {
+
+    "internal_contradictions": [
+      {
+        "id": "IC-01",
+        "severity": "high",
+        "scheme": "PM Vishwakarma",
+        "fields": ["inclusion.not_availed_PMEGP_or_PM_SVANidhi_or_Mudra_in_last_5_years", "exclusions.received_PMEGP_loan_in_last_5_years", "exclusions.has_outstanding_Mudra_or_PM_SVANidhi_loan"],
+        "description": "Inclusion rule bars anyone who availed Mudra or PM SVANidhi in the last 5 years. Exclusion rule only bars those with an *outstanding* Mudra or PM SVANidhi loan. A person who availed Mudra 2 years ago and fully repaid it passes the exclusion check but fails the inclusion check. The two rules contradict each other for the Mudra/SVANidhi case. PMEGP is treated consistently (any availing = excluded) in both.",
+        "resolution_needed": "Decide: is the disqualifier (a) any availing in last 5 years, or (b) only outstanding balance? Align inclusion and exclusion accordingly."
+      },
+      {
+        "id": "IC-02",
+        "severity": "high",
+        "scheme": "Scheme For Financial Assistance For Veteran Artists",
+        "fields": ["inclusion.personal_income_not_exceeding_4000_per_month", "exclusions.household_monthly_income_above_6000"],
+        "description": "Two different income thresholds with two different scopes. Inclusion checks personal income (≤ ₹4,000/month). Exclusion checks household income (> ₹6,000/month). A person with personal income ₹3,500 but household income ₹6,500 passes inclusion but fails exclusion. The original source figure was ₹4,000/month — the ₹6,000 exclusion threshold may be outdated or incorrectly added.",
+        "resolution_needed": "Verify official income cap. Use a single threshold and a single scope (personal OR household). Remove the redundant entry."
+      },
+      {
+        "id": "IC-03",
+        "severity": "medium",
+        "scheme": "Pradhan Mantri Uchchatar Shiksha Protsahan (PM-USP)",
+        "fields": ["inclusion.above_80th_percentile_in_class_12_board_exam", "exclusions.below_80th_percentile_in_class_12_board", "inclusion.gross_family_income_below_4.5_lakh_per_annum", "exclusions.gross_family_income_above_4_5_lakh_per_annum"],
+        "description": "Two inclusion criteria are restated as their exact logical inverses in the exclusions array. 'Above 80th percentile' (inclusion) and 'below 80th percentile' (exclusion) say the same thing. 'Family income below 4.5L' (inclusion) and 'family income above 4.5L' (exclusion) say the same thing. This creates redundant AND logically paired checks.",
+        "resolution_needed": "Remove the duplicate exclusion entries. Each criterion should appear once, either as an inclusion or an exclusion, not both."
+      },
+      {
+        "id": "IC-04",
+        "severity": "medium",
+        "scheme": "Venture Capital Fund for Scheduled Castes",
+        "fields": ["inclusion.SC_entrepreneur_holds_51_percent_ownership_and_management_control", "exclusions.SC_shareholding_below_51_percent"],
+        "description": "The 51% SC ownership requirement is stated as an inclusion criterion AND its inverse is stated as an exclusion. Both resolve to the same check, creating a redundant evaluation.",
+        "resolution_needed": "Remove one. Keep it as an inclusion criterion only."
+      },
+      {
+        "id": "IC-05",
+        "severity": "medium",
+        "scheme": "National Pension Scheme For Traders And Self Employed Persons",
+        "fields": ["inclusion.annual_turnover_below_1.5_crore", "exclusions.annual_turnover_above_1_5_crore"],
+        "description": "The turnover cap is stated as both an inclusion condition and its inverse as an exclusion. Redundant evaluation.",
+        "resolution_needed": "Remove one. Keep it as an inclusion criterion only."
+      },
+      {
+        "id": "IC-06",
+        "severity": "medium",
+        "scheme": "PM Janjati Adivasi Nyaya Maha Abhiyan (PM JANMAN)",
+        "fields": ["inclusion.unelectrified_household_not_covered_under_RDSS_for_solar_power", "inclusion.identified_PM_JANMAN_beneficiary_for_on_grid_connection", "inclusion.resides_in_kaccha_house_for_pucca_house_benefit"],
+        "description": "The inclusion array mixes eligibility criteria for three mutually distinct sub-components (solar power, on-grid connection, pucca house) as if they are all required simultaneously. A household cannot be unelectrified (for solar) AND have an on-grid connection simultaneously. In reality these are OR conditions for different benefits, not AND conditions for a single benefit.",
+        "resolution_needed": "Split inclusion into sub-component keys: inclusion_solar, inclusion_grid, inclusion_pucca. Each should have its own criteria."
+      },
+      {
+        "id": "IC-07",
+        "severity": "low",
+        "scheme": "Pradhan Mantri Uchchatar Shiksha Protsahan (PM-USP)",
+        "fields": ["inclusion.institution_recognized_by_AICTE_or_relevant_regulatory_body", "exclusions.studying_in_non_AISHE_coded_institution"],
+        "description": "Two different institutional recognition standards are used in the same scheme. AICTE recognition and AISHE coding are distinct systems. An institution can be AICTE-approved but not AISHE-coded, or AISHE-coded but not regulated by AICTE (e.g., arts colleges under UGC). These two checks are not equivalent.",
+        "resolution_needed": "Decide which standard is authoritative: AICTE/regulatory body recognition OR AISHE coding. Use one consistently."
+      },
+      {
+        "id": "IC-08",
+        "severity": "low",
+        "scheme": "Venture Capital Fund for Scheduled Castes",
+        "fields": ["inclusion.project_in_manufacturing_or_services_or_allied_sector_including_startups", "exclusions.company_not_under_manufacturing_services_or_allied_sector"],
+        "description": "Sector eligibility is stated as both an inclusion criterion and its inverse as an exclusion. Redundant.",
+        "resolution_needed": "Remove the exclusion entry. The inclusion criterion already handles this."
+      }
+    ],
+
+    "cross_scheme_contradictions": [
+      {
+        "id": "CC-01",
+        "severity": "high",
+        "schemes": ["PM Kisan", "Employees' Pension Scheme"],
+        "fields": ["PM_Kisan.exclusions.pension_above_10k", "EPS.inclusion.age_58_or_above_for_superannuation_pension"],
+        "description": "PM Kisan excludes anyone receiving a pension above ₹10,000/month. EPS superannuation pension for long-serving employees can exceed this threshold. An EPS pensioner who also owns farmland could be excluded from PM Kisan due to their pension income, but neither scheme cross-references the other. The applicant would need to independently know this interaction exists.",
+        "resolution_needed": "Add a cross-scheme note or an explicit exclusion in PM Kisan such as 'EPS_or_other_government_pension_above_10k' to make the interaction traceable."
+      },
+      {
+        "id": "CC-02",
+        "severity": "high",
+        "schemes": ["PM Fasal Bima Yojana (PMFBY)", "PM Krishi Sinchayee Yojana (PMKSY)"],
+        "fields": ["PMFBY.inclusion.land_ownership", "PMKSY.inclusion.Is_farmer"],
+        "description": "PMFBY explicitly requires land_ownership as an inclusion criterion. PMKSY only requires Is_farmer with no explicit land ownership rule, yet land_records is a required document for PMKSY. A tenant farmer or sharecropper would be excluded from PMFBY (no land ownership) but potentially eligible for PMKSY. The inconsistency means the same person's eligibility differs across two sister agriculture schemes without clear justification.",
+        "resolution_needed": "Explicitly state in PMKSY whether tenant farmers and sharecroppers are eligible. Align 'farmer' definition across all three agriculture schemes."
+      },
+      {
+        "id": "CC-03",
+        "severity": "medium",
+        "schemes": ["Employees' Pension Scheme", "National Pension Scheme For Traders And Self Employed Persons"],
+        "fields": ["NPS_Traders.exclusions.covered_under_government_contributed_NPS_or_EPFO_or_ESIC", "EPS.exclusions.new_entrant_with_wages_above_15000_from_sept_2014"],
+        "description": "NPS-Traders explicitly excludes EPFO members (blocking EPS→NPS-Traders path). EPS does not explicitly exclude NPS-Traders members, relying instead on structural incompatibility (EPS requires formal employment; NPS-Traders requires self-employment). The mutual exclusion is enforced only from one side.",
+        "resolution_needed": "Add a cross-reference exclusion in EPS: 'enrolled_in_NPS_Traders_scheme' or note that formal employment status makes NPS-Traders auto-inapplicable."
+      },
+      {
+        "id": "CC-04",
+        "severity": "medium",
+        "schemes": ["Ayushman Bharat - Pradhan Mantri Jan Arogya Yojana", "PM Janjati Adivasi Nyaya Maha Abhiyan (PM JANMAN)"],
+        "fields": ["PM_JANMAN.Mandatory_info_required.Ayushman_Bharat_card_details", "Ayushman_Bharat.inclusion_if_rural.SC_or_ST_household"],
+        "description": "PM JANMAN explicitly requires an Ayushman Bharat card as mandatory information, implying that PVTG households are expected to be Ayushman Bharat beneficiaries simultaneously. However, the Ayushman Bharat scheme's rural inclusion criterion only says 'SC_or_ST_household' — it does not explicitly reference or guarantee PVTG household coverage. The dependency is implied by PM JANMAN but not confirmed by Ayushman Bharat's rules.",
+        "resolution_needed": "Ayushman Bharat should explicitly include 'PVTG_household' or 'PM_JANMAN_beneficiary' as a rural inclusion criterion, or PM JANMAN should not make AB card mandatory for all beneficiaries."
+      }
+    ],
+
+    "cross_scheme_overlaps": [
+      {
+        "id": "OL-01",
+        "severity": "high",
+        "schemes": ["PM Kisan", "PM Fasal Bima Yojana (PMFBY)", "PM Krishi Sinchayee Yojana (PMKSY)"],
+        "description": "All three schemes target farmers. A landowning adult farmer can be simultaneously eligible for all three. There are no cross-scheme exclusions between them. This is likely intentional (income support + insurance + irrigation are complementary), but it is not documented anywhere in the dataset.",
+        "resolution_needed": "Add an 'intended_overlap' note confirming this is by design, or add cross-references so an eligibility checker can surface all three to a qualifying farmer."
+      },
+      {
+        "id": "OL-02",
+        "severity": "high",
+        "schemes": ["PM Vishwakarma", "Pradhan Mantri Virasat ka Samvardhan"],
+        "description": "PM Vishwakarma targets artisans and craftspersons working in 18 traditional trades. PM VIKAS targets minority community members for skilling and traditional craft training. A Muslim weaver, a Sikh blacksmith, or a Christian potter could qualify for both schemes simultaneously. Neither scheme excludes members of the other.",
+        "resolution_needed": "Verify whether dual enrollment is permitted. If not, add cross-exclusions. If yes, document as intended overlap."
+      },
+      {
+        "id": "OL-03",
+        "severity": "medium",
+        "schemes": ["PM Kisan", "MGNREGA", "Ayushman Bharat - Pradhan Mantri Jan Arogya Yojana"],
+        "description": "A rural SC/ST farmer who is an adult with a bank account can simultaneously qualify for PM Kisan (farmer income support), MGNREGA (rural employment), and Ayushman Bharat (SC/ST rural household health cover). All three have no cross-scheme exclusions. This triple overlap is likely intentional but undocumented.",
+        "resolution_needed": "Document as intended complementary overlap."
+      },
+      {
+        "id": "OL-04",
+        "severity": "medium",
+        "schemes": ["Pradhan Mantri Suraksha Bima Yojana", "Employees' Pension Scheme"],
+        "description": "An EPS member (formal sector employee) can also enroll in PMSBY (accident insurance) as long as they have a bank account and are aged 18-70. PMSBY does not exclude EPS members. EPS does not exclude PMSBY enrollees. These cover different risks (pension vs accidental death/disability) so overlap is likely intentional, but no note exists in the data.",
+        "resolution_needed": "Document as intended complementary overlap (different benefit types)."
+      },
+      {
+        "id": "OL-05",
+        "severity": "medium",
+        "schemes": ["Ayushman Bharat - Pradhan Mantri Jan Arogya Yojana", "Pradhan Mantri Suraksha Bima Yojana"],
+        "description": "A low-income rural household qualifying for Ayushman Bharat (health cover) could also enroll in PMSBY (accident insurance) if they have a bank account. Ayushman Bharat excludes those with monthly income above ₹10,000, but PMSBY has no income-based exclusion. No cross-referencing between the two health/insurance schemes.",
+        "resolution_needed": "Document as intended complementary overlap."
+      },
+      {
+        "id": "OL-06",
+        "severity": "low",
+        "schemes": ["Pradhan Mantri Uchchatar Shiksha Protsahan (PM-USP)", "Pradhan Mantri Virasat ka Samvardhan"],
+        "description": "A minority student who is above the 80th percentile in Class 12 and is pursuing a regular degree could qualify for both PM-USP (merit scholarship) and PM VIKAS (education component for minorities). PM-USP exclusion says 'already_availing_another_scholarship_or_fee_waiver_scheme', which would block this overlap — but only if PM VIKAS provides a scholarship/fee waiver. If PM VIKAS provides only skilling stipends, the PM-USP exclusion may not apply.",
+        "resolution_needed": "Clarify whether PM VIKAS education assistance counts as a 'scholarship' for PM-USP exclusion purposes."
+      }
+    ],
+
+    "undefined_terms": [
+      {
+        "id": "UT-01",
+        "severity": "high",
+        "schemes": ["PM Kisan", "MGNREGA", "PM Fasal Bima Yojana (PMFBY)", "PM Krishi Sinchayee Yojana (PMKSY)"],
+        "term": "Is_adult",
+        "description": "Four schemes use 'Is_adult' as an inclusion criterion without defining the age threshold. MGNREGA defines this as 18+ in the Act. PMSBY, PM Vishwakarma, and NPS-Traders use explicit numeric age ranges. An eligibility checker cannot resolve 'Is_adult' without an external definition.",
+        "resolution_needed": "Replace 'Is_adult' with explicit age condition (e.g., 'age_18_or_above') across all four schemes for consistency."
+      },
+      {
+        "id": "UT-02",
+        "severity": "high",
+        "schemes": ["PM Kisan", "Ayushman Bharat - Pradhan Mantri Jan Arogya Yojana", "PM Vishwakarma"],
+        "term": "government_employee",
+        "description": "Three schemes exclude 'government_employee' but the term is undefined. Unresolved edge cases: (1) Does it include contractual/daily-wage government workers? (2) Do PSU employees count? (3) Do employees of government-aided institutions count? (4) Do local body (panchayat/municipality) employees count? Ayushman Bharat separately lists 'non_agricultural_government_enterprise_employee' suggesting PSU employees are a distinct sub-category — but PM Kisan and PM Vishwakarma make no such distinction.",
+        "resolution_needed": "Define 'government_employee' scope. Align across schemes or use sub-categories: central_government_employee, state_government_employee, PSU_employee, aided_institution_employee."
+      },
+      {
+        "id": "UT-03",
+        "severity": "high",
+        "schemes": ["PM Kisan", "Ayushman Bharat - Pradhan Mantri Jan Arogya Yojana", "National Pension Scheme For Traders And Self Employed Persons"],
+        "term": "income_tax_payer",
+        "description": "Three schemes exclude 'income_tax_payer' without defining what this means. Ambiguities: (1) Does filing a return with zero net tax liability count? (2) Does passive TDS deduction (e.g., on FD interest) make someone an income tax payer? (3) The current basic exemption is ₹3 lakh; with rebate u/s 87A, effective threshold is ₹7 lakh — someone with income ₹5-7 lakh may file but pay no tax. The term is not standardized.",
+        "resolution_needed": "Define as 'files income tax return with taxable income above basic exemption limit' or cite the specific provision (e.g., Section 87A rebate applicability)."
+      },
+      {
+        "id": "UT-04",
+        "severity": "high",
+        "schemes": ["PM Kisan", "PM Fasal Bima Yojana (PMFBY)", "PM Krishi Sinchayee Yojana (PMKSY)"],
+        "term": "Is_farmer / farmer",
+        "description": "All three agriculture schemes require the applicant to be a farmer, but 'farmer' is not defined consistently: PMFBY explicitly requires 'land_ownership'; PM Kisan requires land_records as a document implying owned land; PMKSY requires Is_farmer with land_records but no explicit ownership rule. Tenant farmers and sharecroppers are in a grey zone — excluded from PMFBY, ambiguous in PMKSY, unclear in PM Kisan.",
+        "resolution_needed": "Define 'farmer' uniformly. Specify whether tenant farmers, sharecroppers, and contract farmers are included or excluded in each scheme."
+      },
+      {
+        "id": "UT-05",
+        "severity": "medium",
+        "schemes": ["PM Kisan"],
+        "term": "professional",
+        "description": "PM Kisan excludes 'professional' without listing which professions. Official guidelines mention doctors, engineers, lawyers, chartered accountants, and architects — but this is not captured in the data. A self-employed plumber or electrician could ambiguously fall under 'professional'.",
+        "resolution_needed": "Enumerate the specific professions: 'registered_doctor_engineer_lawyer_CA_or_architect'."
+      },
+      {
+        "id": "UT-06",
+        "severity": "medium",
+        "schemes": ["PM Kisan", "PM Vishwakarma", "Ayushman Bharat - Pradhan Mantri Jan Arogya Yojana", "Employees' Pension Scheme"],
+        "term": "family",
+        "description": "PM Kisan explicitly defines family as [husband, wife, minor_children]. PM Vishwakarma uses 'one_member_per_family' and 'another_family_member_already_registered' without defining family. EPS uses 'spouse_or_child' for family pension. Ayushman Bharat requires proof of Joint_or_Nuclear family status. No consistent definition of 'family' exists across schemes that use family-based restrictions.",
+        "resolution_needed": "Standardize family definition or explicitly state the definition within each scheme that uses family-based rules."
+      },
+      {
+        "id": "UT-07",
+        "severity": "medium",
+        "schemes": ["Ayushman Bharat - Pradhan Mantri Jan Arogya Yojana", "Venture Capital Fund for Scheduled Castes", "PM Janjati Adivasi Nyaya Maha Abhiyan (PM JANMAN)"],
+        "term": "SC/ST categorization",
+        "description": "Ayushman Bharat bundles 'SC_or_ST_household' as a single rural inclusion criterion. VCF-SC explicitly excludes ST entrepreneurs ('non_SC_entrepreneur_ST_or_OBC_or_general'). PM JANMAN targets PVTGs, a subset of ST. An ST entrepreneur qualifies for Ayushman Bharat's SC/ST criterion but is excluded from VCF-SC. No cross-referencing or disambiguation exists in the dataset.",
+        "resolution_needed": "Separate SC and ST into distinct criteria wherever they carry different eligibility implications. Add cross-references where relevant."
+      },
+      {
+        "id": "UT-08",
+        "severity": "low",
+        "schemes": ["Pradhan Mantri Virasat ka Samvardhan"],
+        "term": "minority community",
+        "description": "PM VIKAS targets minority community members but the six notified communities (Muslims, Christians, Sikhs, Buddhists, Jains, Parsis) are not listed in the scheme data. An eligibility checker cannot resolve 'minority' membership without this list.",
+        "resolution_needed": "Add explicit list: 'minority_communities': ['Muslim', 'Christian', 'Sikh', 'Buddhist', 'Jain', 'Parsi']"
+      }
+    ],
+
+    "engine_gaps": [
+      {
+        "id": "EG-01",
+        "severity": "high",
+        "affected_schemes": ["Ayushman Bharat - Pradhan Mantri Jan Arogya Yojana"],
+        "status": "fixed",
+        "description": "Compound occupation strings (e.g. 'auto_rickshaw_driver', 'agricultural_labourer', 'daily_wage_labourer') did not match the evaluator occupation sets because _occ() performs exact string membership. An auto-rickshaw driver failed all AB urban occupation checks and was hard-blocked despite qualifying under transport_worker_or_driver. Fixed by adding compound occupation strings to _URBAN_OCCUPATIONS and _FARMER_OCCUPATIONS / _MANUAL_LABOR_OCCUPATIONS.",
+        "resolution": "Added 'auto_rickshaw_driver', 'e_rickshaw_driver', 'taxi_driver', 'cab_driver', 'delivery_worker', 'gig_worker', 'platform_worker' to _URBAN_OCCUPATIONS; 'agricultural_labourer' to _FARMER_OCCUPATIONS; 'daily_wage_labourer' to _MANUAL_LABOR_OCCUPATIONS."
+      },
+      {
+        "id": "EG-02",
+        "severity": "medium",
+        "affected_schemes": ["all"],
+        "status": "fixed",
+        "description": "Occupation field set to the string 'none' (as opposed to Python None) was not treated as missing data. _eval() checks 'value is None' but the string 'none' is truthy, causing _occ() to return 'failed' instead of 'uncertain'. Edge case Profile 8 (Arjun, minor orphan) exposed this when occupation='none'.",
+        "resolution": "Modified _occ() to check str(occ).strip().lower() in ('none', 'n/a', '') and return 'uncertain' for these sentinel strings."
+      },
+      {
+        "id": "EG-03",
+        "severity": "medium",
+        "affected_schemes": ["Pradhan Mantri Uchchatar Shiksha Protsahan (PM-USP)", "Scheme For Financial Assistance For Veteran Artists", "Ayushman Bharat - Pradhan Mantri Jan Arogya Yojana"],
+        "status": "open",
+        "description": "Some profiles include a 'family_total_income' field (e.g. Sharma family: individual income ₹1.5L but family total ₹8L). The engine always uses 'annual_income' for all income checks. PM-USP checks 'gross_family_income_below_4.5_lakh_per_annum' which should logically use family total income, not individual income. This can produce false positives for joint families.",
+        "resolution_needed": "Add a 'family_annual_income' field to the profile schema. Update PM-USP's gross_family_income evaluators to prefer 'family_annual_income' over 'annual_income' when both are provided."
+      },
+      {
+        "id": "EG-04",
+        "severity": "low",
+        "affected_schemes": ["MGNREGA", "PM Krishi Sinchayee Yojana (PMKSY)", "Scheme For Financial Assistance For Veteran Artists"],
+        "status": "open",
+        "description": "Several documents that appear in documents_required lists have no entry in _DOC_CHECKS: 'photographs', 'Address_proof', 'Domicile_certificate', 'Proof_of_the_Current_Status_of_the_Family'. These always resolve as 'uncertain', permanently capping scheme confidence. MGNREGA cannot exceed 0.70 even for a perfect rural adult profile because of this.",
+        "resolution_needed": "Add checkers for common documents: photographs (cannot verify from profile — keep uncertain), Address_proof (could proxy via aadhaar or state field), Domicile_certificate (could proxy via state field)."
+      }
+    ],
+
+    "structural_ambiguities": [
+      {
+        "id": "SA-01",
+        "severity": "high",
+        "scheme": "Ayushman Bharat - Pradhan Mantri Jan Arogya Yojana",
+        "fields": ["inclusion_if_rural", "inclusion_if_Urban"],
+        "description": "The scheme has two separate inclusion arrays (rural and urban) but no criterion in the scheme data determines which one applies to an applicant. The 'Mandatory_info_required' does not include 'Residence_type', and no 'Is_rural' or 'Is_urban' flag exists. An eligibility checker has no way to decide which inclusion list to evaluate.",
+        "resolution_needed": "Add 'Residence_type' to Mandatory_info_required and add a routing rule such as: 'apply_rural_inclusion_if: Residence_is_rural' and 'apply_urban_inclusion_if: Residence_is_urban'."
+      },
+      {
+        "id": "SA-02",
+        "severity": "high",
+        "scheme": "Venture Capital Fund for Scheduled Castes",
+        "fields": ["inclusion"],
+        "description": "The seven inclusion items represent four distinct eligibility pathways (standard SC entrepreneur, incubated tech startup, IP-driven project, government-sanctioned project), but they are stored in a flat array implying AND logic. A standard SC entrepreneur does not need a patent or incubator support. Evaluating all items as a conjunction would make almost no one eligible.",
+        "resolution_needed": "Restructure into named pathways: 'inclusion_pathways': { 'standard_SC_entrepreneur': [...], 'incubated_tech_startup': [...], 'IP_driven_project': [...], 'government_sanctioned_project': [...] }."
+      },
+      {
+        "id": "SA-03",
+        "severity": "high",
+        "schemes": ["PM Fasal Bima Yojana (PMFBY)", "Pradhan Mantri Suraksha Bima Yojana"],
+        "fields": ["exclusions"],
+        "description": "Both schemes use the 'exclusions' field for two fundamentally different types of restrictions: (1) enrollment eligibility exclusions (who cannot apply) and (2) coverage/claims exclusions (which events or losses are not insured after enrollment). PMFBY's war/malicious damage exclusions and PMSBY's suicide/intoxication exclusions are claims exclusions, not eligibility exclusions. Mixing these in the same field creates logical errors — a person who later commits suicide was not ineligible to enroll.",
+        "resolution_needed": "Split into 'eligibility_exclusions' (who cannot apply) and 'coverage_exclusions' (what is not compensated after enrollment) for insurance-type schemes."
+      },
+      {
+        "id": "SA-04",
+        "severity": "medium",
+        "scheme": "Ayushman Bharat - Pradhan Mantri Jan Arogya Yojana",
+        "fields": ["inclusion_if_rural", "inclusion_if_Urban"],
+        "description": "Within each inclusion list (rural and urban), the items are OR conditions — a household qualifies if it meets ANY ONE of the listed criteria (e.g., being a ragpicker OR a domestic worker). However, the flat array structure implies AND logic. An eligibility checker treating the array as AND would find no one eligible (no household is simultaneously a ragpicker AND a washer-man AND a domestic worker).",
+        "resolution_needed": "Add a 'logic' field to each inclusion group: 'logic': 'OR' (meet any one) vs 'logic': 'AND' (must meet all). Default assumption of AND is incorrect for Ayushman Bharat."
+      },
+      {
+        "id": "SA-05",
+        "severity": "medium",
+        "scheme": "PM Janjati Adivasi Nyaya Maha Abhiyan (PM JANMAN)",
+        "fields": ["inclusion"],
+        "description": "Similar to Ayushman Bharat — the inclusion array mixes AND conditions (belongs_to_PVTG, resides_in_18_states) with sub-component-specific OR conditions (solar vs grid vs pucca house). The first two are universal requirements; the last three are benefit-specific. A flat array cannot represent this hierarchy.",
+        "resolution_needed": "Split into 'universal_inclusion' (PVTG membership, state residency, survey identification) and 'benefit_specific_inclusion' as a sub-object with keys per benefit."
+      },
+      {
+        "id": "SA-06",
+        "severity": "low",
+        "scheme": "MGNREGA",
+        "fields": ["rules"],
+        "description": "MGNREGA has no 'exclusions' key at all, unlike all other schemes which have an explicit (even if empty) exclusions array. This is an inconsistency in the schema — some downstream parsers may throw errors or treat missing key differently from an empty array.",
+        "resolution_needed": "Add 'exclusions': [] to MGNREGA rules for schema consistency."
+      },
+      {
+        "id": "SA-07",
+        "severity": "low",
+        "schemes": ["PM Kisan"],
+        "fields": ["rules.family"],
+        "description": "PM Kisan is the only scheme with a 'family' definition key in its rules. All other schemes that use family-based rules (PM Vishwakarma, EPS) do not have this key. Schema is inconsistent — 'family' definition belongs either in all relevant schemes or in a shared definitions block.",
+        "resolution_needed": "Either add 'family' definition to all schemes that use family-based criteria, or move to a top-level 'definitions' object in the JSON."
+      },
+      {
+        "id": "SA-08",
+        "severity": "medium",
+        "scheme": "Ayushman Bharat - Pradhan Mantri Jan Arogya Yojana",
+        "fields": ["inclusion_if_rural", "inclusion_if_Urban"],
+        "description": "AB has no minimum age criterion in its inclusion rules. A 16-year-old minor (edge case Profile 8, Arjun) shows partial AB eligibility at 0.55. AB is a household-level scheme — minors are covered as family members, not as individual applicants. However, the scheme data does not capture this distinction. An orphan minor with no family unit has no household to be covered under, but the engine cannot detect this.",
+        "resolution_needed": "Add a note or 'applicant_type' field clarifying that AB is household-based. Add guardian/family-unit requirement for minors. The 'family_size: 0' from Profile 8 should trigger a warning that the benefit cannot be applied for without a household."
+      },
+      {
+        "id": "SA-09",
+        "severity": "medium",
+        "schemes": ["all disability-related schemes"],
+        "fields": ["documents_required"],
+        "description": "No scheme in the dataset mentions certificate portability or re-verification requirements when an applicant has migrated states. Edge case Profile 9 (Sunita) has a disability certificate from UP but lives in Gujarat. The engine shows scheme eligibility without flagging that the out-of-state certificate may need re-verification. This is a silent data gap — wrong state certificate → application rejection at field level.",
+        "resolution_needed": "Add a 'certificate_state' field to profile schema. Add a warning/gap flag when disability=True but disability_certificate_state != current state."
+      }
+    ],
+
+    "cross_scheme_contradictions_additional": [
+      {
+        "id": "CC-05",
+        "severity": "medium",
+        "schemes": ["MGNREGA", "all gender-specific schemes"],
+        "fields": ["gender handling across all scheme evaluators"],
+        "description": "The MGNREGA Act was amended to explicitly include transgender persons. However, no scheme in the dataset has a transgender-specific inclusion or exclusion rule. The engine treats 'transgender' as a valid gender value but no evaluator uses gender at all (gender is only checked in _INFO_CHECKS to confirm the field is present). Transgender persons appear to have equal access, but this is a data gap — no scheme documents it explicitly.",
+        "resolution_needed": "Add explicit transgender inclusion notes to MGNREGA and any other scheme updated for third-gender coverage. Flag schemes that have gender-based benefits (e.g., women-only components) as 'uncertain' for transgender applicants rather than silently excluding or including them."
+      }
+    ]
+  }
+}

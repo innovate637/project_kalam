@@ -1,0 +1,154 @@
+[
+    {
+    "scheme": "PM Kisan",
+    "ministry": "Ministry of Agriculture",
+    "Mandatory_info_required": ["Address", "Name", "ID_proof", "Gender", "Category", "Bank_Account_Details", "Land_details"],
+    "documents_required": ["aadhaar", "land_records", "bank_passbook","Category_certificate"],
+    "rules": {
+        "family":["husband","wife","minor_children"],
+        "inclusion":["Is_farmer","Is_adult","Mandatory_info_required_complete","documents_required_complete","land_ownership"],
+        "exclusions": ["income_tax_payer", "government_employee", "retired_central_or_state_government_employee", "pension_above_10k","institutional_land_ownership","constitutional_posts","professional","NRI_household"]
+    }
+    },
+    {
+    "scheme": " MGNREGA",
+    "ministry": "Ministry of Rural Development",
+    "Mandatory_info_required": ["Residence_type", "Name","Address", "Age", "ID_proof","Bank_Account_Details"],
+    "documents_required": ["aadhaar", "photographs", "bank_passbook","Address_proof","Category_certificate"],
+    "rules": {
+        "inclusion":["Residence_is_rural","Is_adult","Mandatory_info_required_complete","documents_required_complete"]
+    }
+    },
+    {
+    "scheme": "PM Fasal Bima Yojana (PMFBY)",
+    "ministry": "Ministry of Agriculture",
+    "Mandatory_info_required": ["Name", "Mobile_Number","Crop_Details","Address", "Category", "Bank_Account_Details","Sum_Insured"],
+    "documents_required": ["aadhaar", "land_records", "bank_passbook","crop_declaration","Category_certificate"],
+    "rules": {
+        "inclusion":["Is_farmer","Is_adult","land_ownership","Mandatory_info_required_complete","documents_required_complete"],
+        "exclusions": ["damage_from_war_or_nuke","damage_malicious","damage_from_preventable_risk","damage_from_theft_or_grazing","damage_from_post_harvest_losses_beyond_cutoff_period","non_notified_crop_or_area"]
+    }
+    },
+    {
+    "scheme": "PM Krishi Sinchayee Yojana (PMKSY)",
+    "ministry": "Ministry of Agriculture",
+    "Mandatory_info_required": ["Name", "Mobile_Number","Address", "Category", "Bank_Account_Details"],
+    "documents_required": ["aadhaar","Address_proof", "land_records","photographs", "bank_passbook","Domicile_certifiate"],
+    "rules": {
+        "inclusion":["Is_farmer","Is_adult","Mandatory_info_required_complete","documents_required_complete"],
+        "exclusions": ["already_covered_5_hectares_of_land","uses_non_registered_components","benefit_already_availed_within_7_years_for_same_land"]
+    }
+    },
+    {
+    "scheme": "Ayushman Bharat - Pradhan Mantri Jan Arogya Yojana",
+    "ministry": " Ministry of Health",
+    "Mandatory_info_required": ["Name", "Address", "ID_proof", "Category", "Income_details", "Family_status(Joint_or_Nuclear)"],
+    "documents_required": ["aadhaar","Address_proof","Category_certificate","Income_certificate","Proof_of_the_Current_Status_of_the_Family(Joint_or_Nuclear)"],
+    "rules": {
+        "inclusion_if_rural":["single_room_kaccha_house","no_adult_member_aged_16_to_59","no_adult_male_member_aged_16_to_59","disabled_member_and_no_able_bodied_adult","SC_or_ST_household","landless_manual_casual_labour_household","Mandatory_info_required_complete","documents_required_complete"],
+        "inclusion_if_Urban":["ragpicker","beggar","domestic_worker","street_vendor_or_cobbler_or_hawker","construction_worker_or_plumber_or_mason_or_painter_or_welder_or_security_guard","sweeper_or_sanitation_worker","home_based_worker_or_artisan_or_handicrafts_or_tailor","transport_worker_or_driver_or_conductor_or_rickshaw_puller","shop_worker_or_helper_or_delivery_or_waiter","electrician_or_mechanic_or_assembler_or_repair_worker","washer_man_or_chowkidar","Mandatory_info_required_complete","documents_required_complete"],
+        "exclusions": ["owns_two_three_or_four_wheeler_or_motorized_fishing_boat","owns_mechanized_farming_equipment","kisan_card_credit_limit_above_50k","government_employee","non_agricultural_government_enterprise_employee","monthly_income_above_10k","owns_refrigerator_or_landline","three_or_more_rooms_with_pucca_walls_and_roof","owns_5_acres_or_more_irrigated_land_two_crop_seasons","income_tax_payer","professional_tax_payer","owns_2_5_acres_irrigated_land_with_irrigation_equipment","owns_7_5_or_more_acres_land_with_irrigation_equipment"]
+    }
+    },
+    {
+    "scheme": "PM Janjati Adivasi Nyaya Maha Abhiyan (PM JANMAN)",
+    "ministry": "Ministry of Tribal Affairs",
+    "Mandatory_info_required": ["Name", "Address", "ID_proof", "Tribal_group_status", "Household_details", "Location_details", "Photograph", "Ayushman_Bharat_card_details", "FRA_patta_details"],
+    "documents_required": ["PVTG/Tribal Status Certificate","Household Verification Report/Survey Data","Location Tagging Data","Completion Certificates","Photographs Of Constructed Pucca Houses","Aadhar Card","Ayushman Bharat Card","Forest Right Act (FRA) Pattas."],
+    "rules": {
+        "inclusion":["belongs_to_PVTG","resides_in_18_states_with_notified_PVTG_population","unelectrified_household_not_covered_under_RDSS_for_solar_power","identified_PM_JANMAN_beneficiary_for_on_grid_connection","resides_in_kaccha_house_for_pucca_house_benefit","identified_through_state_physical_survey_on_PM_Gati_Shakti_portal","Mandatory_info_required_complete","documents_required_complete"],
+        "exclusions": []
+    }
+    },
+    {
+    "scheme": "Pradhan Mantri Suraksha Bima Yojana",
+    "ministry": "Ministry Of Finance",
+    "Mandatory_info_required": ["Name", "Age", "Bank_Account_Details", "Auto_debit_consent"],
+    "documents_required": [],
+    "rules": {
+        "inclusion":["bank_account_holder_in_participating_bank","age_18_to_70","consents_to_auto_debit","Mandatory_info_required_complete","documents_required_complete"],
+        "exclusions": ["death_or_disability_due_to_self_inflicted_injury_or_suicide","death_or_disability_due_to_intoxication_or_substance_abuse","death_or_disability_due_to_criminal_act_or_terrorism","death_or_disability_due_to_war_nuclear_or_riot","partial_disability_without_qualifying_limb_or_sight_loss"]
+    }
+    },
+    {
+    "scheme": "PM Vishwakarma",
+    "ministry": "Ministry Of Micro, Small and Medium Enterprises",
+    "Mandatory_info_required": ["Name", "Mobile_Number", "Bank_Account_Details", "Ration_card_details", "Trade_type", "Age"],
+    "documents_required": ["Aadhaar, Mobile number, Bank details, Ration card mandatory for the registration."],
+    "rules": {
+        "inclusion":["artisan_or_craftsperson_working_with_hands_and_tools","self_employed_in_unorganized_sector","engaged_in_one_of_18_traditional_trades","age_18_or_above","not_availed_PMEGP_or_PM_SVANidhi_or_Mudra_in_last_5_years","one_member_per_family","Mandatory_info_required_complete","documents_required_complete"],
+        "exclusions": ["government_employee_or_family_member_of_government_employee","received_PMEGP_loan_in_last_5_years","has_outstanding_Mudra_or_PM_SVANidhi_loan","another_family_member_already_registered"]
+    }
+    },
+    {
+    "scheme": "Pradhan Mantri Virasat ka Samvardhan",
+    "ministry": "Ministry Of Minority Affairs",
+    "Mandatory_info_required": ["Name", "Age", "Gender", "Bank_Account_Details", "EWS_status", "Educational_qualification"],
+    "documents_required": ["Aadhaar card and aadhar linked bank account.EWS Certificate for non-minority candidates.Educational Qualification in line with the training programme being applied for."],
+    "rules": {
+        "inclusion":["age_14_to_45_for_skilling_and_education","age_18_to_45_for_women_leadership_and_entrepreneurship","education_qualification_as_per_NSQF_norms_for_skilling_or_NIOS_norms_for_education","Mandatory_info_required_complete","documents_required_complete"],
+        "exclusions": ["non_minority_community_member_exceeding_25_percent_seat_quota","above_45_years_of_age"]
+    }
+    },
+    {
+    "scheme": "National Pension Scheme For Traders And Self Employed Persons",
+    "ministry": "Ministry Of Labour and Employment",
+    "Mandatory_info_required": ["Name", "Age", "ID_proof", "Bank_Account_Details", "IFSC_code", "Business_type", "Annual_turnover"],
+    "documents_required": ["Aadhaar CardSavings/Jan Dhan Bank Account details along with IFSC Code ( Bank Passbook or Cheque Leave/book or copy of bank statement as evidence of bank account )"],
+    "rules": {
+        "inclusion":["self_employed_shop_or_retail_owner_or_vyapari","age_18_to_40","annual_turnover_below_1.5_crore","Mandatory_info_required_complete","documents_required_complete"],
+        "exclusions": ["covered_under_government_contributed_NPS_or_EPFO_or_ESIC","income_tax_payer","enrolled_under_PM_Shram_Yogi_Maandhan_or_PM_Kisan_Maandhan","annual_turnover_above_1_5_crore"]
+    }
+    },
+    {
+    "scheme": "Venture Capital Fund for Scheduled Castes",
+    "ministry": "Ministry Of Social Justice and Empowerment",
+    "Mandatory_info_required": ["Name", "Caste", "Business_name", "Project_details", "Shareholding_percentage", "SC_ownership_duration", "Patent_or_copyright_details"],
+    "documents_required": ["Caste Certificate.Detailed Project Report (To Be Prepared And Submitted By The Company/Its Promoters).Documentary Proofs / Certificate From the Incubation Centers/corporates (For Technology Oriented Innovative Projects With Support Of Incubation Centers).Documents Regarding Patent/copyrights in the Name of the SC Entrepreneur (For Technology Oriented Innovative Projects Without Support Of Incubation Centers).Sanction Letter (For Projects Sanctioned By Departments Of Government Of India Or In Cases Where Government Subsidy Is Available)."],
+    "rules": {
+        "inclusion":["project_in_manufacturing_or_services_or_allied_sector_including_startups","SC_entrepreneur_holds_51_percent_ownership_and_management_control","6_months_SC_ownership_for_assistance_up_to_50L","12_months_SC_ownership_for_assistance_above_50L","incubated_tech_startup_by_IIT_or_NIT_or_DST_recognized_incubator","SC_entrepreneur_with_patent_or_copyright_and_commercial_potential","government_sanctioned_or_appraised_project","Mandatory_info_required_complete","documents_required_complete"],
+        "exclusions": ["non_SC_entrepreneur_ST_or_OBC_or_general","SC_shareholding_below_51_percent","company_not_under_manufacturing_services_or_allied_sector"]
+    }
+    },
+    {
+    "scheme": "Study in India Programme",
+    "ministry": "Ministry of Education",
+    "Mandatory_info_required": ["Name", "Nationality", "Passport_number", "DOB", "Academic_qualification", "Course_applied", "Language_proficiency", "Photograph"],
+    "documents_required": ["PassportAcademic Qualification CertificatesAcademic Transcripts / Mark SheetsRecent Passport Size PhotographProof of Date of BirthEnglish Language Proficiency Certificate (If Required by Institution)Offer Letter Issued Through Study in India PortalVisa (Post Admission)"],
+    "rules": {
+        "inclusion":["foreign_national","completed_qualifying_education_as_per_course_norms","applied_through_Study_in_India_portal","valid_passport","meets_academic_and_language_requirements_of_chosen_institution","Mandatory_info_required_complete","documents_required_complete"],
+        "exclusions": ["Indian_national","admission_outside_Study_in_India_portal","NRI_not_eligible_for_SII_scholarship","applying_for_medical_or_dental_degree_programme"]
+    }
+    },
+    {
+    "scheme": "Scheme For Financial Assistance For Veteran Artists",
+    "ministry": "Ministry Of Culture",
+    "Mandatory_info_required": ["Name", "Address", "DOB", "ID_proof", "Monthly_income", "Bank_Account_Details", "Artistic_contributions", "Photograph"],
+    "documents_required": ["Recent Photograph: Provide one colored, passport-size photograph taken within the last six months.Address Proof: Submit a self-attested copy of a valid document such as an Aadhaar Card, Voter ID, Passport, or utility bill.Date of Birth Proof: Provide a self-attested copy of a document confirming age, such as a 10th-grade certificate, Birth Certificate, or PAN Card.Identity Verification: Include a self-attested copy of the applicant's Aadhaar Card as a mandatory identification document.Income Certificate: Submit the original Income Certificate in the prescribed Annexure-II(A) format issued by a State/UT authority.Work Portfolio: Provide copies of documents evidencing artistic contributions, awards, or recognition from Government or prominent societies.Bank Authorization: Submit an original Bank Authorization letter (Annexure-IV) verified and signed by the concerned Bank Manager.Official Recommendation: Include the prescribed recommendation letter (Part-II) obtained from the State or UT Culture Department."],
+    "rules": {
+        "inclusion":["significant_contribution_to_art_letters_or_traditional_scholarship","personal_income_not_exceeding_4000_per_month","age_60_or_above","state_pension_of_at_least_500_per_month_or_recommended_by_Zonal_Cultural_Centre","Mandatory_info_required_complete","documents_required_complete"],
+        "exclusions": ["receiving_financial_assistance_under_other_ministry_of_culture_schemes","below_60_years_of_age","household_monthly_income_above_6000","no_state_artist_pension_or_verified_artistic_credentials"]
+    }
+    },
+    {
+    "scheme": "Pradhan Mantri Uchchatar Shiksha Protsahan (PM-USP)",
+    "ministry": "Ministry of Education",
+    "Mandatory_info_required": ["Name", "Class_12_percentile", "Family_income", "Category", "Institution_name", "Bank_Account_Details", "Disability_status"],
+    "documents_required": ["a. FRESH: 12th Mark Sheet, Family Income Certificate, Category/ caste Certification for reserved category students, Disability Certificate (if applicable)b. RENEWAL: Previous Year Mark Sheet"],
+    "rules": {
+        "inclusion":["above_80th_percentile_in_class_12_board_exam","pursuing_regular_degree_course","institution_recognized_by_AICTE_or_relevant_regulatory_body","gross_family_income_below_4.5_lakh_per_annum","50_percent_marks_and_75_percent_attendance_for_renewal","aadhaar_seeded_bank_account","Mandatory_info_required_complete","documents_required_complete"],
+        "exclusions": ["correspondence_or_distance_or_diploma_student","already_availing_another_scholarship_or_fee_waiver_scheme","took_gap_year_after_class_12","gross_family_income_above_4_5_lakh_per_annum","below_80th_percentile_in_class_12_board","studying_in_non_AISHE_coded_institution"]
+    }
+    },
+    {
+    "scheme": "Employees' Pension Scheme",
+    "ministry": "Ministry Of Labour and Employment",
+    "Mandatory_info_required": ["Name", "ID_proof", "DOB", "Bank_Account_Details", "Employment_details", "Years_of_service", "Relationship_to_deceased_member"],
+    "documents_required": ["Identity Proof (Aadhaar/Passport/Voter ID)Bank Account Details (Cancelled cheque/passbook copy)Proof of Date of Birth (Birth certificate/School leaving certificate)Death Certificate (for family pension)relationship proof (for family pension)Disability Certificate, from EPFO-approved doctors (for disablement pension)Service Proof (EPF passbook/employment records)"],
+    "rules": {
+        "inclusion":["EPF_member_under_1952_scheme_or_exempted_establishment","pay_not_exceeding_15000_per_month","minimum_10_years_eligible_service","contributed_to_Employees_Pension_Fund","age_58_or_above_for_superannuation_pension","age_50_to_58_for_early_pension","spouse_or_child_of_deceased_EPF_member_for_family_pension","Mandatory_info_required_complete","documents_required_complete"],
+        "exclusions": ["new_entrant_with_wages_above_15000_from_sept_2014","joined_at_age_58_or_above","apprentice","employee_of_establishment_with_approved_exemption_from_EPS"]
+    }
+    }
+
+]
